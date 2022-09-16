@@ -1,12 +1,12 @@
 import 'dart:io';
 
 import 'package:cocoicons/cocoicons.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:great_places_app/providers/user_places.dart';
-import 'package:great_places_app/widgets/input_image.dart';
+import 'package:great_places_app/widgets/location_input.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/material.dart';
+
+import '../providers/user_places.dart';
+import '../widgets/input_image.dart';
 
 class AddPlaceScreen extends StatefulWidget {
   const AddPlaceScreen({Key? key}) : super(key: key);
@@ -29,6 +29,7 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
     }
     Provider.of<UserPlace>(context, listen: false)
         .addPlace(_textController.text, _pickImage!);
+    Navigator.of(context).pop();
   }
 
   @override
@@ -53,15 +54,17 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
                     ),
                     const SizedBox(height: 10),
                     InputImage(_onPickImage),
+                    const SizedBox(height: 10),
+                    LocationInput(),
                   ],
                 ),
               ),
             ),
           ),
           ElevatedButton.icon(
-            onPressed: () {},
+            onPressed: _savePlace,
             icon: const Icon(
-              CocoIconLine.Add,
+              CocoIconLine.Check,
               size: 30,
             ),
             label: const Text('Submit'),
